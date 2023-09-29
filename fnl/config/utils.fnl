@@ -57,14 +57,6 @@
 (fn autocmd [cmd table]
   (vim.api.nvim_create_autocmd cmd table))
 
-(fn fmt-autocmd [{: language : pattern : cmd}]
-  (let [group (augroup (.. language :_formatter) {:clear true})]
-    (autocmd :BufWritePre
-             {: pattern
-              : group
-              :desc (.. "Auto-format " language " files before saving")
-              :callback (vim.cmd (.. "!" cmd " " (vim.api.nvim_buf_get_name 0)))})))
-
 (fn has [plugin]
   (not= (. (. (require :lazy.core.config) :plugins) plugin) nil))
 
