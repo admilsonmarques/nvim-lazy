@@ -32,6 +32,8 @@
 ;     (navic.attach (client bufnr))))
 
 ; ; (def- capabilities (cmplsp.default_capabilities))
+
+(local teste "abc")
 (local on_attach (fn [client bufnr]
                    (do
                      (buf_keymap bufnr :n :gd
@@ -99,25 +101,26 @@
                                                     (autocmd :BufWritePre
                                                              {:buffer bufnr
                                                               :command :EslintFixAll}))})
-              (lspconfig.fennel_language_server.setup {:root_dir (lspconfig.util.root_pattern :fnl
-                                                                                              :lua)
-                                                       :settings {:fennel {:diagnostics {:globals [:vim
-                                                                                                   :jit
-                                                                                                   :comment]}
-                                                                           :workspace {:library (vim.api.nvim_list_runtime_paths)}}}
-                                                       :on_attach (on-attach (fn []
-                                                                               (autocmd :BufWritePre
-                                                                                        {:pattern :*.fnl
-                                                                                         :desc "Auto-format Fennel files before saving"
-                                                                                         :callback (vim.cmd (.. "!"
-                                                                                                                "fnlfmt --fix"
-                                                                                                                " "
-                                                                                                                (vim.api.nvim_buf_get_name 0)))
-                                                                                         :group fmt-group})
-                                                                               (autocmd :BufWritePost
-                                                                                        {:pattern :*.fnl
-                                                                                         :command :e
-                                                                                         :group fmt-group})))})
+              ; (lspconfig.fennel_language_server.setup {:root_dir (lspconfig.util.root_pattern :fnl
+              ;                                                                                 :lua)
+              ;                                          :settings {:fennel {:diagnostics {:globals [:vim
+              ;                                                                                      :jit
+              ;                                                                                      :comment]}
+              ;                                                              :workspace {:library (vim.api.nvim_list_runtime_paths)}}}
+              ;                                          ; :on_attach (on-attach (fn []
+              ;                                          ;                         (autocmd :BufWritePre
+              ;                                          ;                                  {:pattern :*.fnl
+              ;                                          ;                                   :desc "Auto-format Fennel files before saving"
+              ;                                          ;                                   :callback (vim.cmd (.. "!"
+              ;                                          ;                                                          "fnlfmt --fix"
+              ;                                          ;                                                          " "
+              ;                                          ;                                                          (vim.api.nvim_buf_get_name 0)))
+              ;                                          ;                                   :group fmt-group})
+              ;                                          ;                         (autocmd :BufWritePost
+              ;                                          ;                                  {:pattern :*.fnl
+              ;                                          ;                                   :command :e
+              ;                                          ;                                   :group fmt-group})))
+              ;                                          })
               (lspconfig.pyright.setup {})
               (lspconfig.tsserver.setup {})
               (lspconfig.yamlls.setup {})))}]
