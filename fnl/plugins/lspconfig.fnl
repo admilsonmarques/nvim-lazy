@@ -108,22 +108,7 @@
                                                        :on_attach (fn []
                                                                     (fmt-autocmd {:language :Fennel
                                                                                   :pattern :*.fnl
-                                                                                  :cmd "fnlfmt --fix"})
-                                                                    ; (let [fmt-group (augroup :lsp-formatters
-                                                                    ;                          {:clear true})]
-                                                                    ;   (autocmd :BufWritePre
-                                                                    ;            {:pattern :*.fnl
-                                                                    ;             :desc "Auto-format Fennel files before saving"
-                                                                    ;             :callback (vim.cmd (.. "!"
-                                                                    ;                                    "fnlfmt --fix"
-                                                                    ;                                    " "
-                                                                    ;                                    (vim.api.nvim_buf_get_name 0)))
-                                                                    ;             :group fmt-group})
-                                                                    ;   (autocmd :BufWritePost
-                                                                    ;            {:pattern :*.fnl
-                                                                    ;             :command :e
-                                                                    ;             :group fmt-group}))
-                                                                    )})
+                                                                                  :cmd "fnlfmt --fix"}))})
               (lspconfig.pyright.setup {})
               (lspconfig.tsserver.setup {})
               (lspconfig.yamlls.setup {})))}]
