@@ -4,7 +4,7 @@ local opt = _local_1_["opt"]
 local _local_2_ = require("nfnl.module")
 local autoload = _local_2_["autoload"]
 local core = autoload("nfnl.core")
-local plugins = {marks = true, registers = true, spelling = {enabled = true, suggestions = 20}, presets = {z = true, g = true, text_objects = false, nav = false, motions = false, windows = false, operators = false}}
+local plugins = {marks = true, registers = true, spelling = {enabled = true, suggestions = 20}, presets = {z = true, g = true, operators = false, text_objects = false, motions = false, nav = false, windows = false}}
 local icons = {breadcrumb_separator = "\226\158\156", group_separator = "\226\158\156", separator = "\226\158\156", prompt = "\226\158\156"}
 local popup_mappings = {scroll_down = "<c-j>", scroll_up = "<c-k>"}
 local window = {border = "single", position = "bottom", margin = {1, 0, 1, 0}, padding = {2, 2, 2, 2}, winblend = 0}

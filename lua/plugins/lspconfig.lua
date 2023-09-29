@@ -10,7 +10,6 @@ local autocmd = _local_2_["autocmd"]
 local fmt_autocmd = _local_2_["fmt-autocmd"]
 local buf_keymap = _local_2_["buf_keymap"]
 local on_attach = _local_2_["on-attach"]
-local fmt_group = augroup("lsp-formatters", {clear = true})
 local teste = "abc"
 local on_attach0
 local function _3_(client, bufnr)
@@ -46,8 +45,7 @@ local function _4_()
   end
   lspconfig.eslint.setup({on_attach = _5_})
   local function _6_()
-    autocmd("BufWritePre", {pattern = "*.fnl", desc = "Auto-format Fennel files before saving", callback = vim.cmd(("!" .. "fnlfmt --fix" .. " " .. vim.api.nvim_buf_get_name(0))), group = fmt_group})
-    return autocmd("BufWritePost", {pattern = "*.fnl", command = "e", group = fmt_group})
+    return fmt_autocmd({language = "Fennel", pattern = "*.fnl", cmd = "fnlfmt --fix"})
   end
   lspconfig.fennel_language_server.setup({root_dir = lspconfig.util.root_pattern("fnl", "lua"), settings = {fennel = {diagnostics = {globals = {"vim", "jit", "comment"}}, workspace = {library = vim.api.nvim_list_runtime_paths()}}}, on_attach = _6_})
   lspconfig.pyright.setup({})

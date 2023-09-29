@@ -4,7 +4,7 @@ local autoload = _local_1_["autoload"]
 local core = autoload("nfnl.core")
 local float_opts = {border = "curved", winblend = 0}
 local execs = {{nil, "<M-1>", "Horizontal Terminal", "horizontal", 0.3}, {nil, "<M-2>", "Vertical Terminal", "vertical", 0.4}, {nil, "<M-3>", "Float Terminal", "float", nil}}
-local opts = {size = 20, open_mapping = "<C-\\>", hide_numbers = true, shade_filetypes = {}, start_in_insert = true, insert_mappings = true, direction = "float", float_opts = float_opts, execs = execs, shell = vim.o.shell, close_on_exit = true, shade_terminals = false, persist_size = false}
+local opts = {size = 20, open_mapping = "<C-\\>", hide_numbers = true, shade_filetypes = {}, start_in_insert = true, insert_mappings = true, direction = "float", float_opts = float_opts, execs = execs, shell = vim.o.shell, close_on_exit = true, persist_size = false, shade_terminals = false}
 local function gen_term_app(cmd)
   local toggleterm = require("toggleterm")
   local Terminal = toggleterm.terminal.Terminal

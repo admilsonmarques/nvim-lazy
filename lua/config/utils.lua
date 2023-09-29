@@ -77,10 +77,10 @@ end
 local function fmt_autocmd(_8_)
   local _arg_9_ = _8_
   local language = _arg_9_["language"]
-  local group = _arg_9_["group"]
   local pattern = _arg_9_["pattern"]
   local cmd = _arg_9_["cmd"]
-  return autocmd("BufWritePre", {pattern = pattern, desc = ("Auto-format " .. language .. " files before saving"), callback = vim.cmd(("!" .. cmd .. " " .. vim.api.nvim_buf_get_name(0))), group = group})
+  local group = augroup((language .. "_formatter"), {clear = true})
+  return autocmd("BufWritePre", {pattern = pattern, group = group, desc = ("Auto-format " .. language .. " files before saving"), callback = vim.cmd(("!" .. cmd .. " " .. vim.api.nvim_buf_get_name(0)))})
 end
 local function has(plugin)
   return (((require("lazy.core.config")).plugins)[plugin] ~= nil)

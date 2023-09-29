@@ -57,13 +57,13 @@
 (fn autocmd [cmd table]
   (vim.api.nvim_create_autocmd cmd table))
 
-(fn fmt-autocmd [{: language : group : pattern : cmd}]
-  (autocmd :BufWritePre {: pattern
-                         :desc (.. "Auto-format " language
-                                   " files before saving")
-                         :callback (vim.cmd (.. "!" cmd " "
-                                                (vim.api.nvim_buf_get_name 0)))
-                         : group}))
+(fn fmt-autocmd [{: language : pattern : cmd}]
+  (let [group (augroup (.. language :_formatter) {:clear true})]
+    (autocmd :BufWritePre
+             {: pattern
+              : group
+              :desc (.. "Auto-format " language " files before saving")
+              :callback (vim.cmd (.. "!" cmd " " (vim.api.nvim_buf_get_name 0)))})))
 
 (fn has [plugin]
   (not= (. (. (require :lazy.core.config) :plugins) plugin) nil))
@@ -72,9 +72,8 @@
   (autocmd :User {:pattern :VeryLazy :callback (fn [] (function))}))
 
 (fn on-attach [on_attach]
-  (autocmd :LspAttach
-           {:callback (fn []
-                          (on_attach))}))
+  (autocmd :LspAttach {:callback (fn []
+                                   (on_attach))}))
 
 (fn setup [plugin config]
   (let [plugin (require plugin)]
