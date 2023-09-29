@@ -92,10 +92,8 @@ local function on_very_lazy(_function)
   return autocmd("User", {pattern = "VeryLazy", callback = _10_})
 end
 local function on_attach(on_attach0)
-  local function _11_(args)
-    local buffer = args.buf
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    return on_attach0(client, buffer)
+  local function _11_()
+    return on_attach0()
   end
   return autocmd("LspAttach", {callback = _11_})
 end

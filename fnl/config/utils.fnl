@@ -73,10 +73,8 @@
 
 (fn on-attach [on_attach]
   (autocmd :LspAttach
-           {:callback (fn [args]
-                        (let [buffer args.buf
-                              client (vim.lsp.get_client_by_id args.data.client_id)]
-                          (on_attach client buffer)))}))
+           {:callback (fn []
+                          (on_attach))}))
 
 (fn setup [plugin config]
   (let [plugin (require plugin)]

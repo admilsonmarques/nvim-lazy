@@ -45,7 +45,11 @@ local function _4_()
     return autocmd("BufWritePre", {buffer = bufnr, command = "EslintFixAll"})
   end
   lspconfig.eslint.setup({on_attach = _5_})
-  lspconfig.fennel_language_server.setup({root_dir = lspconfig.util.root_pattern("fnl", "lua"), settings = {fennel = {diagnostics = {globals = {"vim", "jit", "comment"}}, workspace = {library = vim.api.nvim_list_runtime_paths()}}}})
+  local function _6_()
+    autocmd("BufWritePre", {pattern = "*.fnl", desc = "Auto-format Fennel files before saving", callback = vim.cmd(("!" .. "fnlfmt --fix" .. " " .. vim.api.nvim_buf_get_name(0))), group = fmt_group})
+    return autocmd("BufWritePost", {pattern = "*.fnl", command = "e", group = fmt_group})
+  end
+  lspconfig.fennel_language_server.setup({root_dir = lspconfig.util.root_pattern("fnl", "lua"), settings = {fennel = {diagnostics = {globals = {"vim", "jit", "comment"}}, workspace = {library = vim.api.nvim_list_runtime_paths()}}}, on_attach = _6_})
   lspconfig.pyright.setup({})
   lspconfig.tsserver.setup({})
   return lspconfig.yamlls.setup({})
