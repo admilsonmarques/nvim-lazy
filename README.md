@@ -15,10 +15,14 @@ _This is a work in progress repo, there are many flaws and bugs, but I'm working
 
 ## TODOs
 
-- [-] Migrate formatters to Formatter
-- [-] Organize lsp related keybindings
-- [ ] Configure Metals for scala projects
+- [x] Migrate formatters to Guard
+- [x] Organize lsp related keybindings
+- [x] Metals
+- [ ] Gitsigns
+- [ ] NvimTree
+- [ ] Open on Git
+- [ ] Bufferline
+- [ ] UFO
+- [ ] Telekasten and Neorg
 - [ ] Rearrange Language related plugins into a single file/folder
-- [ ] Configure UFO
-- [ ] Proper configure telekasten with neorg
 - [ ] Die organizing whichkey or check alternatives
