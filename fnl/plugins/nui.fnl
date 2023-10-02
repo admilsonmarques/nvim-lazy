@@ -1,2 +1,1 @@
-[{1 :MunifTanjim/nui.nvim
-  :lazy true}]
+[{1 :MunifTanjim/nui.nvim :lazy true}]

@@ -44,18 +44,25 @@
                     (fun.zip (fun.range 1 len) (fun.take (- len 1) args)))
         args)))
 
-(fn keymap [mode key command]
-  (vim.api.nvim_set_keymap mode key command {:silent true :noremap true}))
+(fn keymap [mode key command opts]
+  (vim.api.nvim_set_keymap mode key command opts))
 
-(fn buf_keymap [bufnr mode key command]
-  (vim.api.nvim_buf_set_keymap bufnr mode key command
-                               {:silent true :noremap true}))
+(fn buf_keymap [bufnr mode key command opts]
+  (vim.api.nvim_buf_set_keymap bufnr mode key command))
 
 (fn augroup [cmd table]
   (vim.api.nvim_create_augroup cmd table))
 
 (fn autocmd [cmd table]
   (vim.api.nvim_create_autocmd cmd table))
+
+(fn fmt-autocmd [{: language : pattern : cmd}]
+  (let [group (augroup (.. language :_formatter) {:clear true})]
+    (autocmd :BufWritePost
+             {: pattern
+              : group
+              :desc (.. "Auto-format " language " files before saving")
+              :callback (vim.cmd (.. "!" cmd " " (vim.api.nvim_buf_get_name 0)))})))
 
 (fn has [plugin]
   (not= (. (. (require :lazy.core.config) :plugins) plugin) nil))
@@ -71,9 +78,15 @@
   (let [plugin (require plugin)]
     (plugin.setup config)))
 
-(fn noremap [mode key command] (keymap mode key command))
+(fn noremap [mode key command]
+  (keymap mode key command {:silent true :noremap true}))
 
-(fn lnoremap [mode key command] (noremap mode (.. :<leader> key) command))
+(fn lnoremap [mode key command]
+  (noremap mode (.. :<leader> key) command))
+
+(fn llmap [mode key command desc]
+  (keymap mode (.. :<localleader> key) command
+          {:silent true :noremap false : desc}))
 
 (fn shell-exec [shell]
   (let [process (io.popen shell)
@@ -101,5 +114,6 @@
  : setup
  : noremap
  : lnoremap
+ : llmap
  : shell-exec
  : gitpush}
