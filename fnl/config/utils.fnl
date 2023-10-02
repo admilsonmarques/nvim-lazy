@@ -84,9 +84,9 @@
 (fn lnoremap [mode key command]
   (noremap mode (.. :<leader> key) command))
 
-(fn llmap [mode key command]
-  (buf_keymap mode (.. :<localleader> key) command
-              {:silent true :noremap false}))
+(fn llmap [mode key command desc]
+  (keymap mode (.. :<localleader> key) command
+          {:silent true :noremap false : desc}))
 
 (fn shell-exec [shell]
   (let [process (io.popen shell)

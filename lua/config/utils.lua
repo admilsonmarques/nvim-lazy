@@ -107,8 +107,8 @@ end
 local function lnoremap(mode, key, command)
   return noremap(mode, ("<leader>" .. key), command)
 end
-local function llmap(mode, key, command)
-  return buf_keymap(mode, ("<localleader>" .. key), command, {silent = true, noremap = false})
+local function llmap(mode, key, command, desc)
+  return keymap(mode, ("<localleader>" .. key), command, {silent = true, desc = desc, noremap = false})
 end
 local function shell_exec(shell)
   local process = io.popen(shell)
