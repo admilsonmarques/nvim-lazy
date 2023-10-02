@@ -10,12 +10,14 @@ local autocmd = _local_2_["autocmd"]
 local noremap = _local_2_["noremap"]
 local llmap = _local_2_["llmap"]
 local function lsp_binding()
+  noremap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", "Definition")
   llmap("n", "d", "<Cmd>lua vim.lsp.buf.definition()<CR>", "Definition")
-  llmap("n", "D", "<Cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration")
+  llmap("n", "l", "<Cmd>lua vim.lsp.buf.document_highlight()<CR>", "Highlights")
+  llmap("n", "s", "<Cmd>lua telescope.builtin.treesitter()<CR>", "Symbols")
   llmap("n", "k", "<Cmd>lua vim.lsp.buf.hover()<CR>", "Hover")
   llmap("n", "h", "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature Help")
   llmap("n", "r", "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename")
-  llmap("n", "d", "<cmd>lua vim.diagnostic.open_float()<CR>", "Float Diagnostics")
+  llmap("n", "D", "<cmd>lua vim.diagnostic.open_float()<CR>", "Float Diagnostics")
   llmap("n", "f", "<cmd>lua vim.lsp.buf.format()<CR>", "Format")
   llmap("n", "j", "<cmd>lua vim.diagnostic.goto_next()<CR>", "Next Diag")
   llmap("n", "k", "<cmd>lua vim.diagnostic.goto_prev()<CR>", "Prev Diag")
