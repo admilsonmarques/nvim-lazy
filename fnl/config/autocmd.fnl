@@ -31,7 +31,7 @@
 (autocmd :BufWritePre {:pattern "*" :command "silent! exec '%s/\\s\\+$/'"})
 
 ;Update buffer after save
-(autocmd :BufWritePost {:pattern "*" :command :e})
+; (autocmd :BufWritePost {:pattern "*" :command :e})
 ; ;LSP Format on save
 ; (autocmd :BufWritePre
 ;                              {:pattern "*"

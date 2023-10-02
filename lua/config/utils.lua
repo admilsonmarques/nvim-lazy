@@ -62,11 +62,11 @@ local function tx(...)
     return args
   end
 end
-local function keymap(mode, key, command)
-  return vim.api.nvim_set_keymap(mode, key, command, {silent = true, noremap = true})
+local function keymap(mode, key, command, opts)
+  return vim.api.nvim_set_keymap(mode, key, command, opts)
 end
-local function buf_keymap(bufnr, mode, key, command)
-  return vim.api.nvim_buf_set_keymap(bufnr, mode, key, command, {silent = true, noremap = true})
+local function buf_keymap(bufnr, mode, key, command, opts)
+  return vim.api.nvim_buf_set_keymap(bufnr, mode, key, command)
 end
 local function augroup(cmd, table)
   return vim.api.nvim_create_augroup(cmd, table)
@@ -74,30 +74,41 @@ end
 local function autocmd(cmd, table)
   return vim.api.nvim_create_autocmd(cmd, table)
 end
+local function fmt_autocmd(_8_)
+  local _arg_9_ = _8_
+  local language = _arg_9_["language"]
+  local pattern = _arg_9_["pattern"]
+  local cmd = _arg_9_["cmd"]
+  local group = augroup((language .. "_formatter"), {clear = true})
+  return autocmd("BufWritePost", {pattern = pattern, group = group, desc = ("Auto-format " .. language .. " files before saving"), callback = vim.cmd(("!" .. cmd .. " " .. vim.api.nvim_buf_get_name(0)))})
+end
 local function has(plugin)
   return (((require("lazy.core.config")).plugins)[plugin] ~= nil)
 end
 local function on_very_lazy(_function)
-  local function _8_()
+  local function _10_()
     return _function()
   end
-  return autocmd("User", {pattern = "VeryLazy", callback = _8_})
+  return autocmd("User", {pattern = "VeryLazy", callback = _10_})
 end
 local function on_attach(on_attach0)
-  local function _9_()
+  local function _11_()
     return on_attach0()
   end
-  return autocmd("LspAttach", {callback = _9_})
+  return autocmd("LspAttach", {callback = _11_})
 end
 local function setup(plugin, config)
   local plugin0 = require(plugin)
   return plugin0.setup(config)
 end
 local function noremap(mode, key, command)
-  return keymap(mode, key, command)
+  return keymap(mode, key, command, {silent = true, noremap = true})
 end
 local function lnoremap(mode, key, command)
   return noremap(mode, ("<leader>" .. key), command)
+end
+local function llmap(mode, key, command)
+  return buf_keymap(mode, ("<localleader>" .. key), command, {silent = true, noremap = false})
 end
 local function shell_exec(shell)
   local process = io.popen(shell)
@@ -108,4 +119,4 @@ end
 local function gitpush()
   return shell_exec("~/.config/nvim/scripts/gitpush.sh")
 end
-return {opt = opt, colorscheme = colorscheme, g = g, keymap = keymap, buf_keymap = buf_keymap, augroup = augroup, autocmd = autocmd, ["fmt-autocmd"] = __fnl_global__fmt_2dautocmd, has = has, ["vis-op+"] = vis_op_2b, bkset = bkset, ["on-very-lazy"] = on_very_lazy, ["on-attach"] = on_attach, tx = tx, setup = setup, noremap = noremap, lnoremap = lnoremap, ["shell-exec"] = shell_exec, gitpush = gitpush}
+return {opt = opt, colorscheme = colorscheme, g = g, keymap = keymap, buf_keymap = buf_keymap, augroup = augroup, autocmd = autocmd, ["fmt-autocmd"] = fmt_autocmd, has = has, ["vis-op+"] = vis_op_2b, bkset = bkset, ["on-very-lazy"] = on_very_lazy, ["on-attach"] = on_attach, tx = tx, setup = setup, noremap = noremap, lnoremap = lnoremap, llmap = llmap, ["shell-exec"] = shell_exec, gitpush = gitpush}
