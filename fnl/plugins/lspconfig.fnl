@@ -6,24 +6,21 @@
 
 (fn lsp-binding []
   ;LSP
-  (noremap :n :gd "<Cmd>lua vim.lsp.buf.definition()<CR>")
-  (noremap :n :gD "<Cmd>lua vim.lsp.buf.declaration()<CR>")
-  (noremap :n :gi "<Cmd>lua vim.lsp.buf.implementation()<CR>")
-  (noremap :n :K "<Cmd>lua vim.lsp.buf.hover()<CR>")
   (llmap :n :d "<Cmd>lua vim.lsp.buf.definition()<CR>" :Definition)
-  (llmap :n :D "<Cmd>lua vim.lsp.buf.declaration()<CR>" :Declaration)
-  (llmap :n :K "<Cmd>lua vim.lsp.buf.hover()<CR>" :Hover)
-  (llmap :n :t "<cmd>lua vim.lsp.buf.type_definition()<CR>" :TypeDefinition)
+  (llmap :n :D "<Cmd>lua vim.lsp.buf.declaration()<CR>" :Declaration) ; *vim.lsp.buf.references()
+  ;vim.lsp.buf.workspace_symbol()*
+  ;vim.lsp.buf.execute_command() ; vim.lsp.buf.document_symbol()
+  ;vim.lsp.buf.document_highlight()*
+  ;*vim.lsp.buf.completion()*
+  ;*telescope.builtin.grep_string()
+  ;telescope.builtin.treesitter()
+  (llmap :n :k "<Cmd>lua vim.lsp.buf.hover()<CR>" :Hover)
   (llmap :n :h "<cmd>lua vim.lsp.buf.signature_help()<CR>" "Signature Help")
-  (llmap :n :n "<cmd>lua vim.lsp.buf.rename()<CR>" :Rename)
-  (llmap :n :e "<cmd>lua vim.diagnostic.open_float()<CR>" "Float Diagnostics")
-  (llmap :n :q "<cmd>lua vim.diagnostic.setloclist()<CR>")
+  (llmap :n :r "<cmd>lua vim.lsp.buf.rename()<CR>" :Rename)
+  (llmap :n :d "<cmd>lua vim.diagnostic.open_float()<CR>" "Float Diagnostics")
   (llmap :n :f "<cmd>lua vim.lsp.buf.format()<CR>" :Format)
   (llmap :n :j "<cmd>lua vim.diagnostic.goto_next()<CR>" "Next Diag")
   (llmap :n :k "<cmd>lua vim.diagnostic.goto_prev()<CR>" "Prev Diag")
-  (llmap :n :a "<cmd>lua vim.lsp.buf.code_action()<CR>" "Code Action")
-  (llmap :v :a "<cmd>lua vim.lsp.buf.range_code_action()<CR> "
-         "Range Code Action")
   ;telescope
   (llmap :n :w ":lua require('telescope.builtin').diagnostics()<cr>"
          "Telescope Diag")
