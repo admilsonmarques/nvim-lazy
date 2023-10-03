@@ -48,7 +48,7 @@
   (vim.api.nvim_set_keymap mode key command opts))
 
 (fn buf_keymap [bufnr mode key command opts]
-  (vim.api.nvim_buf_set_keymap bufnr mode key command))
+  (vim.api.nvim_buf_set_keymap bufnr mode key command opts))
 
 (fn augroup [cmd table]
   (vim.api.nvim_create_augroup cmd table))
@@ -78,16 +78,6 @@
   (let [plugin (require plugin)]
     (plugin.setup config)))
 
-(fn noremap [mode key command]
-  (keymap mode key command {:silent true :noremap true}))
-
-(fn lnoremap [mode key command]
-  (noremap mode (.. :<leader> key) command))
-
-(fn llmap [mode key command desc]
-  (keymap mode (.. :<localleader> key) command
-          {:silent true :noremap false : desc}))
-
 (fn shell-exec [shell]
   (let [process (io.popen shell)
         reader (process:read :*a)]
@@ -96,6 +86,21 @@
       reader)))
 
 (fn gitpush [] (shell-exec "~/.config/nvim/scripts/gitpush.sh"))
+
+; (fn merge [& maps]
+;   ;merge n tables into one
+;   (let [maps maps]
+;     (fun.reduce (fn [acc map] (vim.tbl_extend :force acc map)) {} maps)))
+
+(fn noremap [mode key command ?desc]
+  (keymap mode key command {:silent true :noremap true :desc ?desc}))
+
+(fn lnoremap [mode key command ?desc]
+  (noremap mode (.. :<leader> key) command ?desc))
+
+(fn llmap [mode key command desc]
+  (keymap mode (.. :<localleader> key) command
+          {:silent true :noremap false : desc}))
 
 {: opt
  : colorscheme
@@ -116,4 +121,5 @@
  : lnoremap
  : llmap
  : shell-exec
- : gitpush}
+ : gitpush
+ : merge}

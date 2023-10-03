@@ -66,7 +66,7 @@ local function keymap(mode, key, command, opts)
   return vim.api.nvim_set_keymap(mode, key, command, opts)
 end
 local function buf_keymap(bufnr, mode, key, command, opts)
-  return vim.api.nvim_buf_set_keymap(bufnr, mode, key, command)
+  return vim.api.nvim_buf_set_keymap(bufnr, mode, key, command, opts)
 end
 local function augroup(cmd, table)
   return vim.api.nvim_create_augroup(cmd, table)
@@ -101,15 +101,6 @@ local function setup(plugin, config)
   local plugin0 = require(plugin)
   return plugin0.setup(config)
 end
-local function noremap(mode, key, command)
-  return keymap(mode, key, command, {silent = true, noremap = true})
-end
-local function lnoremap(mode, key, command)
-  return noremap(mode, ("<leader>" .. key), command)
-end
-local function llmap(mode, key, command, desc)
-  return keymap(mode, ("<localleader>" .. key), command, {silent = true, desc = desc, noremap = false})
-end
 local function shell_exec(shell)
   local process = io.popen(shell)
   local reader = process:read("*a")
@@ -119,4 +110,13 @@ end
 local function gitpush()
   return shell_exec("~/.config/nvim/scripts/gitpush.sh")
 end
-return {opt = opt, colorscheme = colorscheme, g = g, keymap = keymap, buf_keymap = buf_keymap, augroup = augroup, autocmd = autocmd, ["fmt-autocmd"] = fmt_autocmd, has = has, ["vis-op+"] = vis_op_2b, bkset = bkset, ["on-very-lazy"] = on_very_lazy, ["on-attach"] = on_attach, tx = tx, setup = setup, noremap = noremap, lnoremap = lnoremap, llmap = llmap, ["shell-exec"] = shell_exec, gitpush = gitpush}
+local function noremap(mode, key, command, _3fdesc)
+  return keymap(mode, key, command, {silent = true, noremap = true, desc = _3fdesc})
+end
+local function lnoremap(mode, key, command, _3fdesc)
+  return noremap(mode, ("<leader>" .. key), command, _3fdesc)
+end
+local function llmap(mode, key, command, desc)
+  return keymap(mode, ("<localleader>" .. key), command, {silent = true, desc = desc, noremap = false})
+end
+return {opt = opt, colorscheme = colorscheme, g = g, keymap = keymap, buf_keymap = buf_keymap, augroup = augroup, autocmd = autocmd, ["fmt-autocmd"] = fmt_autocmd, has = has, ["vis-op+"] = vis_op_2b, bkset = bkset, ["on-very-lazy"] = on_very_lazy, ["on-attach"] = on_attach, tx = tx, setup = setup, noremap = noremap, lnoremap = lnoremap, llmap = llmap, ["shell-exec"] = shell_exec, gitpush = gitpush, merge = merge}

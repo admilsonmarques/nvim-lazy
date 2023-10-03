@@ -22,7 +22,7 @@ _This is a work in progress repo, there are many flaws and bugs, but I'm working
 - [ ] NvimTree
 - [ ] Open on Git
 - [ ] Bufferline
-- [ ] UFO
+- [x] UFO
 - [ ] Telekasten and Neorg
 - [ ] Rearrange Language related plugins into a single file/folder
 - [ ] Die organizing whichkey or check alternatives

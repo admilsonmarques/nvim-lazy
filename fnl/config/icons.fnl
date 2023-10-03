@@ -40,7 +40,7 @@
              :Daily "󰃭"
              :Weekly "󰨳"})
 
-(local git {:LineGeneral "│"
+(local git {:LineGeneral "┃"
             :LineAdd "+"
             :LineChange "~"
             :LineDelete "-"
