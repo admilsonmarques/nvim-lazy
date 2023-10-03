@@ -11,7 +11,6 @@
   {:foldfunc :builtin
    :setopt true
    :separator " "
-   :order :SNsFs
    :relculright true
    :segments (segments builtin)
    :clickmod :c})
