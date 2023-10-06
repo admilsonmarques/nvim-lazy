@@ -26,13 +26,16 @@ local function metals_setup(metals, metals_config)
   return metals_config
 end
 local function _2_()
+  return vim.cmd("LspStart metals")
+end
+local function _3_()
   local metals = require("metals")
   local metals_config = metals.bare_config()
   local nvim_metals_group = augroup("nvim-metals", {clear = true})
   bindings()
-  local function _3_()
+  local function _4_()
     return metals.initialize_or_attach(metals_setup(metals, metals_config))
   end
-  return autocmd("FileType", {desc = "Initialize metals", pattern = {"scala", "sbt"}, callback = _3_, group = nvim_metals_group})
+  return autocmd("FileType", {desc = "Initialize metals", pattern = {"scala", "sbt"}, callback = _4_, group = nvim_metals_group})
 end
-return {{"scalameta/nvim-metals", dependencies = {"nvim-lua/plenary.nvim", "nvim-lua/popup.nvim", "hrsh7th/cmp-nvim-lsp"}, config = _2_}}
+return {{"scalameta/nvim-metals", dependencies = {"nvim-lua/plenary.nvim", "nvim-lua/popup.nvim", "hrsh7th/cmp-nvim-lsp"}, on_attach = _2_, config = _3_}}

@@ -42,6 +42,8 @@
   :dependencies [:nvim-lua/plenary.nvim
                  :nvim-lua/popup.nvim
                  :hrsh7th/cmp-nvim-lsp]
+  :on_attach (fn []
+               (vim.cmd "LspStart metals"))
   :config (fn []
             (let [metals (require :metals)
                   metals-config (metals.bare_config)
