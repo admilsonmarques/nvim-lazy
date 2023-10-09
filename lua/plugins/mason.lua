@@ -1,5 +1,4 @@
 -- [nfnl] Compiled from fnl/plugins/mason.fnl by https://github.com/Olical/nfnl, do not edit.
-local lspconfig = require("lspconfig")
 local opts = {ui = {border = "rounded", icons = {package_installed = "\226\156\147", package_pending = "\226\158\156", package_uninstalled = "\226\156\151"}}, max_concurrent_installers = 10}
 local function _1_()
   local mason = require("mason")

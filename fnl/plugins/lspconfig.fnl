@@ -51,7 +51,6 @@
                                                                                                    :jit
                                                                                                    :comment]}
                                                                            :workspace {:library (vim.api.nvim_list_runtime_paths)}}}})
-              (lspconfig.metals.setup {})
               (lspconfig.pyright.setup {})
               (lspconfig.tsserver.setup {:ft [:tsx :ts]
                                          :on_attach (fn [client bufnr]
