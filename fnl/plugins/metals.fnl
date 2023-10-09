@@ -15,7 +15,7 @@
 
 ;; keymaps
 (fn bindings []
-  (llmap :n :i "<cmd>lua require'metals'.organize_imports()<cr>"
+  (llmap :n :I "<cmd>lua require'metals'.organize_imports()<cr>"
          "Metals - Organize Imports")
   (llmap :n :m "<cmd>lua require'telescope'.extensions.metals.commands()<cr>"
          "Metals - menu"))

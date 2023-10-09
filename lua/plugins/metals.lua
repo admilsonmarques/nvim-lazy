@@ -24,7 +24,7 @@ local function status_handler(err, status, ctx)
   end
 end
 local function bindings()
-  llmap("n", "i", "<cmd>lua require'metals'.organize_imports()<cr>", "Metals - Organize Imports")
+  llmap("n", "I", "<cmd>lua require'metals'.organize_imports()<cr>", "Metals - Organize Imports")
   return llmap("n", "m", "<cmd>lua require'telescope'.extensions.metals.commands()<cr>", "Metals - menu")
 end
 local function _4_()
