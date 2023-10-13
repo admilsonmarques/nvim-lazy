@@ -1,20 +1,17 @@
-(local {: autoload} (require :nfnl.module))
-(local core (autoload :nfnl.core))
-(local {: noremap : llmap} (autoload :config.utils))
+(local {: noremap : lnoremap} (require :config.utils))
 
 ;; Common ctrl/cmd shortcuts
 ;; save
-(noremap :n :<C-s> ":update!<CR>")
-(noremap :i :<C-s> "<ESC>:update!<CR>")
+(noremap :n :<C-s> ":update!<CR>" "Save file")
+(noremap :i :<C-s> "<ESC>:update!<CR>" "Save file")
 
-;; Source config
-; (noremap :n :<leader><leader> "<cmd>source $MYVIMRC<cr>")
-
+(lnoremap :n :Q "<Cmd>%bd|e#<cr>" "Close all but current buffer")
 ;; Normal ;;
 ;; jk escape sequences.
-(noremap :i :jk :<esc>)
-(noremap :c :jk :<c-c>)
-(noremap :t :jk "<c-\\><c-n>")
+(noremap :i :jk :<esc> "Leave mode")
+(noremap :i :<esc> :<esc> "Leave mode")
+(noremap :c :jk :<C-c> "Leave mode")
+(noremap :t :jk "<C-\\><c-n>" "Leave mode")
 
 ;; Better window navigation
 (noremap :n :<C-h> :<C-w>h)
@@ -43,26 +40,26 @@
 ;; Move text up and down
 (noremap :x :J ":move '>+1<CR>gv-gv")
 (noremap :x :K ":move '<-2<CR>gv-gv")
-(noremap :x :<m-j> ":move '>+1<CR>gv-gv")
-(noremap :x :<m-k> ":move '<-2<CR>gv-gv")
+(noremap :x :<C-j> ":move '>+1<CR>gv-gv")
+(noremap :x :<C-k> ":move '<-2<CR>gv-gv")
 
 ;; Move text up and down
-(noremap :v :<m-j> ":m .+1<CR>==")
-(noremap :v :<m-k> ":m .-2<CR>==")
+(noremap :v :<C-j> ":m .+1<CR>==")
+(noremap :v :<C-k> ":m .-2<CR>==")
 (noremap :v :p "\"_dP")
 
 ;; Splits
-(noremap :n :<m-s> :<cmd>split<CR>)
-(noremap :n :<m-t> :<cmd>vsplit<CR>)
+(noremap :n :<C-S-s> :<cmd>split<CR>)
+(noremap :n :<C-S-t> :<cmd>vsplit<CR>)
 
 ;; Nav
-(noremap :n :<m-m> :<cmd>bprev<CR>)
-(noremap :n :<m-i> :<cmd>bnext<CR>)
+(noremap :n :<C-m> :<cmd>bprev<CR> "Previous buffer")
+(noremap :n :<C-i> :<cmd>bnext<CR> "Next buffer")
 
-(noremap :n :<c-d> :<c-d>zz)
-(noremap :n :<c-u> :<c-u>zz)
+(noremap :n :<C-d> :<c-d>zz "Move screen down")
+(noremap :n :<C-u> :<c-u>zz "Move screen up")
 
-(noremap :n :<m-n> :<cmd>nohlsearch<CR>)
+(lnoremap :n :<C-S-n> :<cmd>nohlsearch<CR> "Clear highlights")
 
-(noremap :n :Q "<cmd>:q<CR>")
-(noremap :n "-" "<cmd>:Explore<cr>")
+(lnoremap :n :<C-Q> "<cmd>:q<CR>" :Quit)
+(noremap :n "-" "<Cmd>:Explore<cr>")

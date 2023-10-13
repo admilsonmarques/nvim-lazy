@@ -37,9 +37,15 @@
                     {:showImplicitArguments true
                      :showImplicitConversionsAndClasses true
                      :showInferredType true
-                     :enableSemanticHighlighting false})
-              (tset metals-config :capabilities
-                    ((. (require :cmp_nvim_lsp) :default_capabilities)))
+                     :enableSemanticHighlighting false
+                     :serverVersion :latest.snapshot
+                     :scalafixRulesDependencies ["com.github.liancheng/scalafix-rules-dotty:0.1.6"]
+                     :serverProperties ["-XX:+UseStringDeduplication"
+                                        "-XX:MaxInlineLevel=20"
+                                        "-XX:+UseParallelGC"
+                                        :-Xmx10G
+                                        :-Xms2G]})
+              ((. (require :cmp_nvim_lsp) :default_capabilities))
               (tset metals-config :on_attach
                     (fn [client bufnr]
                       (metals.setup_dap)))

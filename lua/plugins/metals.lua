@@ -33,8 +33,8 @@ local function _4_()
   local nvim_metals_group = augroup("nvim-metals", {clear = true})
   do end (metals_config)["handlers"] = {["metals/status"] = status_handler}
   metals_config.init_options["statusBarProvider"] = "on"
-  metals_config["settings"] = {showImplicitArguments = true, showImplicitConversionsAndClasses = true, showInferredType = true, enableSemanticHighlighting = false}
-  metals_config["capabilities"] = (require("cmp_nvim_lsp")).default_capabilities()
+  metals_config["settings"] = {showImplicitArguments = true, showImplicitConversionsAndClasses = true, showInferredType = true, serverVersion = "latest.snapshot", scalafixRulesDependencies = {"com.github.liancheng/scalafix-rules-dotty:0.1.6"}, serverProperties = {"-XX:+UseStringDeduplication", "-XX:MaxInlineLevel=20", "-XX:+UseParallelGC", "-Xmx10G", "-Xms2G"}, enableSemanticHighlighting = false}
+  do end (require("cmp_nvim_lsp")).default_capabilities()
   local function _5_(client, bufnr)
     return metals.setup_dap()
   end

@@ -1,1 +1,1 @@
-[{1 :iamcco/markdown-preview.nvim}]
+[{1 :iamcco/markdown-preview.nvim :ft :markdown :build "cd app && npm install"}]

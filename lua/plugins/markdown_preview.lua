@@ -1,2 +1,2 @@
 -- [nfnl] Compiled from fnl/plugins/markdown_preview.fnl by https://github.com/Olical/nfnl, do not edit.
-return {{"iamcco/markdown-preview.nvim"}}
+return {{"iamcco/markdown-preview.nvim", ft = "markdown", build = "cd app && npm install"}}
