@@ -1,5 +1,3 @@
-(local lspconfig (require :lspconfig))
-
 (local opts {:ui {:border :rounded
                   :icons {:package_installed "✓"
                           :package_pending "➜"

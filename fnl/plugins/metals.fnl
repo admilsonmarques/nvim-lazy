@@ -1,56 +1,56 @@
-(local {: g : autocmd : augroup : llmap} (require :config.utils))
+(local {: autocmd : augroup : llmap} (require :config.utils))
 
-(fn set-settings [metals-config]
-  (let [opts {:superMethodLensesEnabled true
-              :showImplicitArguments true
-              :showImplicitConversionsAndClasses true
-              :showInferredType true
-              :showImplicitConversionsAndClasses true
-              :serverVersion :latest.snapshot
-              :serverProperties ["-XX:MaxRAMPercentage=80.0"
-                                 :-Xss6M
-                                 "-XX:-UseGCOverheadLimit"
-                                 "-XX:+UseG1GC"]
-              :enableSemanticHighlighting true
-              :excludedPackages [:akka.actor.typed.javadsl
-                                 :com.github.swagger.akka.javadsl]
-              :javaHome "/usr/local/homebrew/Cellar/openjdk@8/1.8.0+352"}]
-    (set metals-config.settings opts)))
+;; Adapted from https://github.com/hudclark/.dotfiles/blob/640a0f3d1a367a8803c2a8cc43f68b4ce0e245f2/.config/nvim/fnl/user/plugins/lsp/metals.fnl#L4
+(fn status-handler [err status ctx]
+  (let [text (-> status.text
+                 (: :gsub "[⠇⠋⠙⠸⠴⠦]" "")
+                 (: :gsub "^%s*(.-)%s*$" "%1"))
+        msg-val (if status.hide {:kind :end}
+                    status.show {:kind :begin :title text}
+                    status.text {:kind :report :message text})
+        info {:client_id ctx.client_id}
+        msg {:token :metals :value msg-val}]
+    (when msg.value
+      ((. vim.lsp.handlers :$/progress) err msg ctx))))
 
-(fn set-capabilities [metals-config]
-  (let [cmp (require :cmo_nvim_lsp)]
-    (set metals-config.capabilities (cmp.default_capabilities))))
-
+;; keymaps
 (fn bindings []
-  (llmap :n :m "<cmd>lua require('telescope').extensions.metals.commands()<cr>"
-         "Telescope Metals"))
-
-(fn metals-setup [metals metals-config]
-  (let [cmp (require :cmo_nvim_lsp)]
-    (set-settings metals-config)
-    (set-capabilities metals-config) ; (set-autocmd)
-    (set metals-config.init_options.statusBarProvider :on)
-    (vim.cmd "
-               hi! link LspCodeLens       CursorColumn
-               hi! link LspReferenceText  CursorColumn
-               hi! link LspReferenceRead  CursorColumn
-               hi! link LspReferenceWrite CursorColumn
-               ")
-    metals-config))
+  (llmap :n :I "<cmd>lua require'metals'.organize_imports()<cr>"
+         "Metals - Organize Imports")
+  (llmap :n :m "<cmd>lua require'telescope'.extensions.metals.commands()<cr>"
+         "Metals - menu"))
 
 [{1 :scalameta/nvim-metals
   :dependencies [:nvim-lua/plenary.nvim
+                 :mfussenegger/nvim-dap
                  :nvim-lua/popup.nvim
                  :hrsh7th/cmp-nvim-lsp]
   :config (fn []
             (let [metals (require :metals)
                   metals-config (metals.bare_config)
-                  nvim_metals_group (augroup :nvim-metals {:clear true})]
+                  nvim-metals-group (augroup :nvim-metals {:clear true})]
+              ;; Tell metals to use the above status handler
+              (tset metals-config :handlers {:metals/status status-handler})
+              ;; Enable metals LSP status
+              (tset metals-config.init_options :statusBarProvider :on)
+              (tset metals-config :settings
+                    {:showImplicitArguments true
+                     :showImplicitConversionsAndClasses true
+                     :showInferredType true
+                     :enableSemanticHighlighting false
+                     :serverVersion :latest.snapshot
+                     :scalafixRulesDependencies ["com.github.liancheng/scalafix-rules-dotty:0.1.6"]
+                     :serverProperties ["-XX:+UseStringDeduplication"
+                                        "-XX:MaxInlineLevel=20"
+                                        "-XX:+UseParallelGC"
+                                        :-Xmx10G
+                                        :-Xms2G]})
+              ((. (require :cmp_nvim_lsp) :default_capabilities))
+              (tset metals-config :on_attach
+                    (fn [client bufnr]
+                      (metals.setup_dap)))
               (bindings)
               (autocmd :FileType
-                       {:desc "Initialize metals"
-                        :pattern [:scala :sbt]
-                        :callback (fn []
-                                    (metals.initialize_or_attach (metals-setup metals
-                                                                               metals-config)))
-                        :group nvim_metals_group})))}]
+                       {:pattern [:scala :sbt :sc]
+                        :callback #(metals.initialize_or_attach metals-config)
+                        :group nvim-metals-group})))}]

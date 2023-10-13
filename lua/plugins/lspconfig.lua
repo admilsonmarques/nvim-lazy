@@ -1,16 +1,14 @@
 -- [nfnl] Compiled from fnl/plugins/lspconfig.fnl by https://github.com/Olical/nfnl, do not edit.
 local vim = vim
-local _local_1_ = require("nfnl.module")
-local autoload = _local_1_["autoload"]
-local fun = autoload("config.fun")
-local core = autoload("nfnl.core")
-local _local_2_ = require("config.utils")
-local augroup = _local_2_["augroup"]
-local autocmd = _local_2_["autocmd"]
-local noremap = _local_2_["noremap"]
-local llmap = _local_2_["llmap"]
+local _local_1_ = require("config.utils")
+local augroup = _local_1_["augroup"]
+local autocmd = _local_1_["autocmd"]
+local noremap = _local_1_["noremap"]
+local llmap = _local_1_["llmap"]
 local function lsp_binding()
   noremap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", "Definition")
+  noremap("i", "C-a", "<Cmd>lua vim.lsp.buf.code_action()<CR>", "Action")
+  llmap("n", "a", "<Cmd>lua vim.lsp.buf.code_action()<CR>", "Action")
   llmap("n", "d", "<Cmd>lua vim.lsp.buf.definition()<CR>", "Definition")
   llmap("n", "l", "<Cmd>lua vim.lsp.buf.document_highlight()<CR>", "Highlights")
   llmap("n", "s", "<Cmd>lua telescope.builtin.treesitter()<CR>", "Symbols")
@@ -33,7 +31,7 @@ local function on_attach(client, bufnr)
     return nil
   end
 end
-local function _4_()
+local function _3_()
   local lspconfig = require("lspconfig")
   lsp_binding()
   lspconfig.ansiblels.setup({})
@@ -41,17 +39,16 @@ local function _4_()
   lspconfig.clojure_lsp.setup({})
   lspconfig.cssls.setup({})
   lspconfig.dockerls.setup({})
-  local function _5_(_, bufnr)
+  local function _4_(_, bufnr)
     return autocmd("BufWritePre", {buffer = bufnr, command = "EslintFixAll"})
   end
-  lspconfig.eslint.setup({on_attach = _5_})
+  lspconfig.eslint.setup({on_attach = _4_})
   lspconfig.fennel_language_server.setup({root_dir = lspconfig.util.root_pattern("fnl", "lua"), settings = {fennel = {diagnostics = {globals = {"vim", "jit", "comment"}}, workspace = {library = vim.api.nvim_list_runtime_paths()}}}})
-  lspconfig.metals.setup({})
   lspconfig.pyright.setup({})
-  local function _6_(client, bufnr)
+  local function _5_(client, bufnr)
     return on_attach(client, bufnr)
   end
-  lspconfig.tsserver.setup({ft = {"tsx", "ts"}, on_attach = _6_})
+  lspconfig.tsserver.setup({ft = {"tsx", "ts"}, on_attach = _5_})
   return lspconfig.yamlls.setup({})
 end
-return {{"neovim/nvim-lspconfig", opts = {}, config = _4_}}
+return {{"neovim/nvim-lspconfig", opts = {}, config = _3_}}

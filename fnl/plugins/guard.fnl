@@ -1,7 +1,4 @@
-(local {: autoload} (require :nfnl.module))
-(local core (autoload :nfnl.core))
-
-(local {: augroup : autocmd : lnoremap} (require :config.utils))
+(local {: lnoremap} (require :config.utils))
 
 [{1 :nvimdev/guard.nvim
   :dependencies [:nvimdev/guard-collection]
@@ -10,7 +7,7 @@
                   guard (require :guard)]
               (-> (ft :python) (: :fmt :black))
               (-> (ft :fennel) (: :fmt :fnlfmt))
-              (-> (ft "clojure,edn")
+              (-> (ft :clojure)
                   (: :fmt {:cmd :joker
                            :args [:--format "-"]
                            :stdin true

@@ -1,6 +1,6 @@
 (local opts {:manual_mode false
              :detection_methods [:pattern]
-             :patterns [:.git :.nfnl.fnl]
+             :patterns [:.git :.nfnl.fnl :src]
              :ignore_lsp {}
              :exclude_dirs {}
              :show_hidden true

@@ -1,4 +1,4 @@
-(local {: autoload} (require :nfnl.module))
+(local {: augroup : autocmd : autoload} (require :nfnl.module))
 (local core (autoload :nfnl.core))
 
 (local icons (autoload :config.icons))
@@ -17,16 +17,10 @@
 
 (local git {:enable true :ignore false :timeout 200})
 
-(local mappings-view-list {1 {:key [:l :<CR> :o] :action :edit :mode :n}
-                           2 {:key :h :action :close_node}
-                           3 {:key :v :action :vsplit}
-                           4 {:key :C :action :cd}})
-
 (local view {:width 30
              ; :hide_root_folder false
              :side :left
              :adaptive_size true
-             ; :mappings {:custom_only false :list mappings-view-list}
              :number false
              :relativenumber false
              :signcolumn :yes})
@@ -109,6 +103,16 @@
              : log
              : actions})
 
+(fn bindings []
+  (autocmd :FileType
+           {:desc "Close folders on NvimTree with 'h'"
+            :pattern [:NvimTree]
+            :command "nnoremap <silent> h <cmd>lua nvim-tree-api.node.navigate.parent_close()<cr>"})
+  (autocmd :FileType
+           {:desc "Open folders on NvimTree with 'l' and files as preview (temporary buffer)"
+            :pattern [:NvimTree]
+            :command "nnoremap <silent> l <cmd>lua nvim-tree-api.node.navigate.preview()<cr>"}))
+
 (local keys
        [{1 :<leader>e 2 :<cmd>NvimTreeToggle<CR> :mode :n :desc :NvimTree}])
 
@@ -117,8 +121,7 @@
   :lazy false
   :dependencies [:nvim-tree/nvim-web-devicons]
   : keys
-  : opts
-  ; :config (fn []
-  ;           (let [tree (require :nvim-tree)]
-  ;             (tree.setup opts)))
-  }]
+  ; : opts
+  :config (fn []
+            (let [tree (require :nvim-tree)]
+              (tree.setup opts)))}]

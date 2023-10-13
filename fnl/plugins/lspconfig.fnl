@@ -1,12 +1,11 @@
 (local vim vim)
-(local {: autoload} (require :nfnl.module))
-(local fun (autoload :config.fun))
-(local core (autoload :nfnl.core))
 (local {: augroup : autocmd : noremap : llmap} (require :config.utils))
 
 (fn lsp-binding []
   ;LSP
   (noremap :n :gd "<Cmd>lua vim.lsp.buf.definition()<CR>" :Definition)
+  (noremap :i :C-a "<Cmd>lua vim.lsp.buf.code_action()<CR>" :Action)
+  (llmap :n :a "<Cmd>lua vim.lsp.buf.code_action()<CR>" :Action)
   (llmap :n :d "<Cmd>lua vim.lsp.buf.definition()<CR>" :Definition)
   (llmap :n :l "<Cmd>lua vim.lsp.buf.document_highlight()<CR>" :Highlights)
   (llmap :n :s "<Cmd>lua telescope.builtin.treesitter()<CR>" :Symbols)
@@ -51,7 +50,6 @@
                                                                                                    :jit
                                                                                                    :comment]}
                                                                            :workspace {:library (vim.api.nvim_list_runtime_paths)}}}})
-              (lspconfig.metals.setup {})
               (lspconfig.pyright.setup {})
               (lspconfig.tsserver.setup {:ft [:tsx :ts]
                                          :on_attach (fn [client bufnr]
