@@ -7,7 +7,6 @@ local noremap = _local_1_["noremap"]
 local llmap = _local_1_["llmap"]
 local function lsp_binding()
   noremap("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", "Definition")
-  noremap("i", "C-a", "<Cmd>lua vim.lsp.buf.code_action()<CR>", "Action")
   llmap("n", "a", "<Cmd>lua vim.lsp.buf.code_action()<CR>", "Action")
   llmap("n", "d", "<Cmd>lua vim.lsp.buf.definition()<CR>", "Definition")
   llmap("n", "l", "<Cmd>lua vim.lsp.buf.document_highlight()<CR>", "Highlights")

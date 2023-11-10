@@ -2,47 +2,49 @@
 (local core (autoload :nfnl.core))
 
 (local ensure_installed [:bash
-                        :c
-                        :clojure
-                        :css
-                        :dockerfile
-                        :fennel
-                        :go
-                        :http
-                        :html
-                        :java
-                        :javascript
-                        :json
-                        :lua
-                        :markdown
-                        :python
-                        :rust
-                        :scala
-                        :typescript
-                        :vim
-                        :yaml
-                        ])
+                         :c
+                         :clojure
+                         :css
+                         :dockerfile
+                         :fennel
+                         :go
+                         :http
+                         :html
+                         :java
+                         :javascript
+                         :json
+                         :lua
+                         :markdown
+                         :norg
+                         :norg_meta
+                         :python
+                         :rust
+                         :scala
+                         :typescript
+                         :vim
+                         :yaml])
 
 (local context_commentstring {:enable true
-                             :enable_autocmd false
-                             :config {:typescript "// %s"
-                                      :css "/* %s */"
-                                      :scss "/* %s */"
-                                      :html "<!-- %s -->"
-                                      :svelte "<!-- %s -->"
-                                      :vue "<!-- %s -->"
-                                      :json ""}})
+                              :enable_autocmd false
+                              :config {:typescript "// %s"
+                                       :css "/* %s */"
+                                       :scss "/* %s */"
+                                       :html "<!-- %s -->"
+                                       :svelte "<!-- %s -->"
+                                       :vue "<!-- %s -->"
+                                       :json ""}})
 
 (local ignore_install {:haskell :jsonc})
 
-(local opts {: ensure_installed
-            : context_commentstring
-            :highlight {:enable true :additional_vim_regex_highlighting false}
-            :indent {:enable true :disable [:yaml :python]}
-            : ignore_install
-            :auto_install true
-            :incremental_selection {:enable true}
-            :rainbow {:enable true :extended_mode true :max_file_lines 1000}})
+(local opts
+       {: ensure_installed
+        : context_commentstring
+        :highlight {:enable true :additional_vim_regex_highlighting false}
+        :indent {:enable true :disable [:yaml :python]}
+        : ignore_install
+        :auto_install true
+        :incremental_selection {:enable true}
+        :rainbow {:enable true :extended_mode true :max_file_lines 1000}})
 
 (fn commentstring_opts [commentstring]
   {:active true
@@ -65,9 +67,7 @@
 ;    {1 :<leader>TIm 2 :<cmd>TSModuleInfo<cr> :desc :Modules]
 ;    {1 :<leader>TIi 2 :<cmd>TSInstallInfo<cr> :desc :Install]}])
 
-[{1 :JoosepAlviste/nvim-ts-context-commentstring
-  :lazy false}
-
+[{1 :JoosepAlviste/nvim-ts-context-commentstring :lazy false}
  {1 :nvim-treesitter/nvim-treesitter
   :lazy false
   :build ":TSUpdate"
@@ -80,5 +80,5 @@
  {1 :numToStr/Comment.nvim
   :lazy false
   :opts (fn []
-           (let [commentstring (require :ts_context_commentstring.integrations.comment_nvim)]
-             (commentstring_opts commentstring)) )}]
+          (let [commentstring (require :ts_context_commentstring.integrations.comment_nvim)]
+            (commentstring_opts commentstring)))}]
