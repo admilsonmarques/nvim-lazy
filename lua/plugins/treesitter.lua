@@ -2,7 +2,7 @@
 local _local_1_ = require("nfnl.module")
 local autoload = _local_1_["autoload"]
 local core = autoload("nfnl.core")
-local ensure_installed = {"bash", "c", "clojure", "css", "dockerfile", "fennel", "go", "http", "html", "java", "javascript", "json", "lua", "markdown", "python", "rust", "scala", "typescript", "vim", "yaml"}
+local ensure_installed = {"bash", "c", "clojure", "css", "dockerfile", "fennel", "go", "http", "html", "java", "javascript", "json", "lua", "markdown", "norg", "norg_meta", "python", "rust", "scala", "typescript", "vim", "yaml"}
 local context_commentstring = {enable = true, config = {typescript = "// %s", css = "/* %s */", scss = "/* %s */", html = "<!-- %s -->", svelte = "<!-- %s -->", vue = "<!-- %s -->", json = ""}, enable_autocmd = false}
 local ignore_install = {haskell = "jsonc"}
 local opts = {ensure_installed = ensure_installed, context_commentstring = context_commentstring, highlight = {enable = true, additional_vim_regex_highlighting = false}, indent = {enable = true, disable = {"yaml", "python"}}, ignore_install = ignore_install, auto_install = true, incremental_selection = {enable = true}, rainbow = {enable = true, extended_mode = true, max_file_lines = 1000}}
