@@ -47,7 +47,7 @@ local function _3_()
   local function _5_(client, bufnr)
     return on_attach(client, bufnr)
   end
-  lspconfig.tsserver.setup({ft = {"tsx", "ts"}, on_attach = _5_})
+  lspconfig.tsserver.setup({ft = {"tsx", "ts", "typescript", "typescriptreact"}, on_attach = _5_})
   return lspconfig.yamlls.setup({})
 end
 return {{"neovim/nvim-lspconfig", opts = {}, config = _3_}}

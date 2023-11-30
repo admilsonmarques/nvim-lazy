@@ -50,7 +50,11 @@
                                                                                                    :comment]}
                                                                            :workspace {:library (vim.api.nvim_list_runtime_paths)}}}})
               (lspconfig.pyright.setup {})
-              (lspconfig.tsserver.setup {:ft [:tsx :ts]
+              (lspconfig.tsserver.setup {:ft [:tsx
+                                              :ts
+                                              :typescript
+                                              :typescriptreact]
                                          :on_attach (fn [client bufnr]
                                                       (on-attach client bufnr))})
               (lspconfig.yamlls.setup {})))}]
+

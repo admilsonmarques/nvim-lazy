@@ -20,7 +20,9 @@
                          :python
                          :rust
                          :scala
-                         :typescript
+                         :toml
+                         ; :tsx
+                         ; :typescript
                          :vim
                          :yaml])
 
@@ -36,27 +38,28 @@
 
 (local ignore_install {:haskell :jsonc})
 
-(local opts
-       {: ensure_installed
-        : context_commentstring
-        :highlight {:enable true :additional_vim_regex_highlighting false}
-        :indent {:enable true :disable [:yaml :python]}
-        : ignore_install
-        :auto_install true
-        :incremental_selection {:enable true}
-        :rainbow {:enable true :extended_mode true :max_file_lines 1000}})
+(local opts {: ensure_installed
+             ;             : context_commentstring
+             :highlight {:enable true :additional_vim_regex_highlighting false}
+             :indent {:enable true :disable [:yaml :python]}
+             : ignore_install
+             :autotag {:enable true}
+             :auto_install true
+             :incremental_selection {:enable true}
+             :rainbow {:enable true :extended_mode true :max_file_lines 1000}
+             :additional_vim_regex_highlighting false})
 
-(fn commentstring_opts [commentstring]
-  {:active true
-   :padding true
-   :sticky true
-   :ignore "^$"
-   :mappings {:basic true :extra true}
-   :toggler {:line :gcc :block :gbc}
-   :opleader {:line :gc :block :gb}
-   :extra {:above :gcO :below :gco :eol :gcA}
-   :pre_hook (commentstring.create_pre_hook)
-   :post_hoot nil})
+; (fn commentstring_opts [commentstring]
+;   {:active true
+;    :padding true
+;    :sticky true
+;    :ignore "^$"
+;    :mappings {:basic true :extra true}
+;    :toggler {:line :gcc :block :gbc}
+;    :opleader {:line :gc :block :gb}
+;    :extra {:above :gcO :below :gco :eol :gcA}
+;    :pre_hook (commentstring.create_pre_hook)
+;    :post_hoot nil})
 
 ; (local nkeys
 ;   [{1 :<leader>Tp 2 :<cmd>TSPlaygroundToggle<cr> :desc :Playground}
@@ -75,10 +78,17 @@
                  :JoosepAlviste/nvim-ts-context-commentstring
                  :p00f/nvim-ts-rainbow]
   :config (fn []
-            (let [treesitter (require :nvim-treesitter.configs)]
-              (treesitter.setup opts)))}
+            (let [treesitter (require :nvim-treesitter.configs)
+                  parsers (require :nvim-treesitter.parsers)
+                  parsers_config (parsers.get_parser_configs)]
+              (treesitter.setup opts)
+              (set parsers_config.tsx.filetype_to_parsername
+                   [:javascript :typescript.tsx])))}
  {1 :numToStr/Comment.nvim
   :lazy false
-  :opts (fn []
-          (let [commentstring (require :ts_context_commentstring.integrations.comment_nvim)]
-            (commentstring_opts commentstring)))}]
+  :opts {:pre_hook (fn []
+                     (let [commentstring (require :ts_context_commentstring)
+                           comment_nvim (commentstring.integrations.comment_nvim)]
+                       (tset vim.g :skip_ts_context_commentstring_module true)
+                       (comment_nvim.create_pre_hook)))}}]
+
