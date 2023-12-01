@@ -4,7 +4,7 @@ local autoload = _local_1_["autoload"]
 local core = autoload("nfnl.core")
 local ensure_installed = {"bash", "c", "clojure", "css", "dockerfile", "fennel", "go", "http", "html", "java", "javascript", "json", "lua", "markdown", "norg", "norg_meta", "python", "rust", "scala", "toml", "vim", "yaml"}
 local context_commentstring = {enable = true, config = {typescript = "// %s", css = "/* %s */", scss = "/* %s */", html = "<!-- %s -->", svelte = "<!-- %s -->", vue = "<!-- %s -->", json = ""}, enable_autocmd = false}
-local ignore_install = {haskell = "jsonc"}
+local ignore_install = {haskell = "jsonc", tsx = "typescript"}
 local opts = {ensure_installed = ensure_installed, highlight = {enable = true, additional_vim_regex_highlighting = false}, indent = {enable = true, disable = {"yaml", "python"}}, ignore_install = ignore_install, autotag = {enable = true}, auto_install = true, incremental_selection = {enable = true}, rainbow = {enable = true, extended_mode = true, max_file_lines = 1000}, additional_vim_regex_highlighting = false}
 local function _2_()
   local treesitter = require("nvim-treesitter.configs")

@@ -36,7 +36,7 @@
                                        :vue "<!-- %s -->"
                                        :json ""}})
 
-(local ignore_install {:haskell :jsonc})
+(local ignore_install {:haskell :jsonc :tsx :typescript})
 
 (local opts {: ensure_installed
              ;             : context_commentstring
